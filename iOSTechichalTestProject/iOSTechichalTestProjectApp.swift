@@ -11,7 +11,9 @@ import SwiftUI
 struct iOSTechichalTestProjectApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabView {
+                PeopleView()
+            }
         }
     }
 }
