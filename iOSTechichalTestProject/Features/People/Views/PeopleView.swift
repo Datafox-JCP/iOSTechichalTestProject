@@ -1,9 +1,9 @@
-//
-//  PeopleView.swift
-//  iOSTechichalTestProject
-//
-//  Created by Juan Hernandez Pazos on 22/08/22.
-//
+    //
+    //  PeopleView.swift
+    //  iOSTechichalTestProject
+    //
+    //  Created by Juan Hernandez Pazos on 22/08/22.
+    //
 
 import SwiftUI
 
@@ -11,6 +11,7 @@ struct PeopleView: View {
     
     @StateObject private var vm = PeopleViewModel()
     @State private var shouldShowCreate = false
+    @State private var shouldShowSuccess = false
     
     private let columns = Array(repeating: GridItem(.flexible()), count: 2)
     
@@ -19,19 +20,23 @@ struct PeopleView: View {
             ZStack {
                 background
                 
-                ScrollView {
-                    LazyVGrid(columns: columns,
-                              spacing: 16) {
-                        ForEach(vm.users, id:\.id) { user in
-                            NavigationLink {
-                                DetailView(userID: user.id)
-                            } label: {
-                                PersonItemView(user: user)
+                if vm.isLoading {
+                    ProgressView()
+                } else {
+                    ScrollView {
+                        LazyVGrid(columns: columns,
+                                  spacing: 16) {
+                            ForEach(vm.users, id:\.id) { user in
+                                NavigationLink {
+                                    DetailView(userID: user.id)
+                                } label: {
+                                    PersonItemView(user: user)
+                                }
                             }
-                        } // ForEach
+                        }
+                        .padding()
                     }
-                } // Scroll
-                .padding()
+                }
             } // ZStack
             .navigationTitle("People")
             .toolbar {
@@ -43,7 +48,29 @@ struct PeopleView: View {
                 vm.fetchUsers()
             }
             .sheet(isPresented: $shouldShowCreate) {
-                CreateView()
+                CreateView {
+                    withAnimation(.spring().delay(0.25)) {
+                        self.shouldShowSuccess.toggle()
+                    }
+                }
+            }
+            .alert(isPresented: $vm.hasError, error: vm.error) {
+                Button("Retry") {
+                    vm.fetchUsers()
+                }
+            }
+            .overlay {
+                if shouldShowSuccess {
+                    CheckmarkPopoverView()
+                        .transition(.scale.combined(with: .opacity))
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                withAnimation(.spring()) {
+                                    self.shouldShowSuccess.toggle()
+                                }
+                            }
+                        }
+                }
             }
         } // Navigation
     }
@@ -70,7 +97,8 @@ private extension PeopleView {
                 .font(
                     .system(.headline, design: .rounded)
                     .bold()
-                    )
+                )
         }
+        .disabled(vm.isLoading)
     }
 }
