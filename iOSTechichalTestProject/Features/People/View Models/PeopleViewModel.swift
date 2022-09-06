@@ -14,19 +14,21 @@ final class PeopleViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published var hasError = false
     
-    func fetchUsers() {
+    @MainActor
+    func fetchUsers() async {
         isLoading = true
-        NetworkManager.shared.request("https://reqres.in/api/users?delay=3",
-                                      type: UsersResponse.self) { [weak self] res in
-            DispatchQueue.main.async {
-                defer { self?.isLoading = false }
-                switch res {
-                case .success(let response):
-                    self?.users = response.data
-                case .failure(let error):
-                    self?.hasError = true
-                    self?.error = error as? NetworkManager.NetworkingError
-                }
+        defer { isLoading = false }
+        
+        do {
+            let response = try await NetworkManager.shared.request("https://reqres.in/api/users",
+                                                                   type: UsersResponse.self)
+            self.users = response.data
+        } catch {
+            self.hasError = true
+            if let networkingError = error as? NetworkManager.NetworkingError {
+                self.error = networkingError
+            } else {
+                self.error = .custom(error: error)
             }
         }
     }

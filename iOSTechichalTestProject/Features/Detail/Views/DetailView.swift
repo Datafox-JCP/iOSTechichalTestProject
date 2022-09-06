@@ -38,8 +38,8 @@ struct DetailView: View {
             }
         }
         .navigationTitle("Details")
-        .onAppear {
-            vm.fetchDetail(for: userID)
+        .task {
+            await vm.fetchDetail(for: userID)
         }
         .alert(isPresented: $vm.hasError, error: vm.error) { }
     }
