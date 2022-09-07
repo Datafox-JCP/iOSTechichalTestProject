@@ -32,10 +32,20 @@ struct PeopleView: View {
                                     DetailView(userID: user.id)
                                 } label: {
                                     PersonItemView(user: user)
+                                        .task {
+                                            if vm.hasReachedEnd(of: user) && vm.isFetching {
+                                                await vm.fetchNextSetOfusers()
+                                            }
+                                        }
                                 }
                             }
                         }
                         .padding()
+                    }
+                    .overlay(alignment: .bottom) {
+                        if vm.isFetching {
+                            ProgressView()
+                        }
                     }
                 }
             } // ZStack
