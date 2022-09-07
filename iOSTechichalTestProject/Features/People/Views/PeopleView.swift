@@ -45,7 +45,7 @@ struct PeopleView: View {
                     create
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
-                    refresh()
+                    refresh
                 }
             }
             .task {

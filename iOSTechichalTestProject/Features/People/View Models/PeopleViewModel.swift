@@ -20,7 +20,7 @@ final class PeopleViewModel: ObservableObject {
         defer { isLoading = false }
         
         do {
-            let response = try await NetworkManager.shared.request("https://reqres.in/api/users",
+            let response = try await NetworkManager.shared.request(.people,
                                                                    type: UsersResponse.self)
             self.users = response.data
         } catch {

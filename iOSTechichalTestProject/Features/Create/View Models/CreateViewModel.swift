@@ -27,8 +27,9 @@ final class CreateViewModel: ObservableObject {
             enconder.keyEncodingStrategy = .convertToSnakeCase
             let data = try? enconder.encode(person)
             
-            try await NetworkManager.shared.request(methodType: .POST(data: data),
-                                                    "https://reqres.in/api/users?delay=3")
+//            try await NetworkManager.shared.request(methodType: .POST(data: data),
+//                                                    "https://reqres.in/api/users?delay=3")
+            try await NetworkManager.shared.request(.create(submissionData: data))
             
             state = .successful
             

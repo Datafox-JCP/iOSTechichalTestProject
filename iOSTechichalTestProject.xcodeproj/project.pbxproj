@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C613414F28C923DE00EE673A /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C613414E28C923DE00EE673A /* EndPoint.swift */; };
 		C6382FD728B9079A00A5EAA3 /* CheckmarkPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6382FD628B9079A00A5EAA3 /* CheckmarkPopoverView.swift */; };
 		C63BC67728A7D81100EDFCA4 /* UsersStaticData.json in Resources */ = {isa = PBXBuildFile; fileRef = C63BC67628A7D81100EDFCA4 /* UsersStaticData.json */; };
 		C63BC67928A7D8BC00EDFCA4 /* SingleUserData.json in Resources */ = {isa = PBXBuildFile; fileRef = C63BC67828A7D8BC00EDFCA4 /* SingleUserData.json */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C613414E28C923DE00EE673A /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		C6382FD628B9079A00A5EAA3 /* CheckmarkPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkPopoverView.swift; sourceTree = "<group>"; };
 		C63BC67628A7D81100EDFCA4 /* UsersStaticData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = UsersStaticData.json; sourceTree = "<group>"; };
 		C63BC67828A7D8BC00EDFCA4 /* SingleUserData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SingleUserData.json; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				C67632FF28B6B2F000BBA661 /* NetworkManager.swift */,
+				C613414E28C923DE00EE673A /* EndPoint.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -428,6 +431,7 @@
 				C676330028B6B2F000BBA661 /* NetworkManager.swift in Sources */,
 				C63BC67D28A7DBF800EDFCA4 /* UserResponse.swift in Sources */,
 				C659B83E28BE4088005A2552 /* HapticManager.swift in Sources */,
+				C613414F28C923DE00EE673A /* EndPoint.swift in Sources */,
 				C692ACAA28B505E700929F21 /* PersonItemView.swift in Sources */,
 				C676330228B6E61000BBA661 /* PeopleViewModel.swift in Sources */,
 				C6382FD728B9079A00A5EAA3 /* CheckmarkPopoverView.swift in Sources */,

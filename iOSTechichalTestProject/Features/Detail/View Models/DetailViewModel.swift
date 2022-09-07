@@ -20,7 +20,8 @@ final class DetailViewModel: ObservableObject {
         defer { isLoading = false }
         
         do {
-            self .userInfo = try await NetworkManager.shared.request("https://reqres.in/api/users/\(id)", type: UserDetailResponse.self)
+//            self .userInfo = try await NetworkManager.shared.request("https://reqres.in/api/users/\(id)", type: UserDetailResponse.self)
+            self .userInfo = try await NetworkManager.shared.request(.detail(id: id), type: UserDetailResponse.self)
         } catch {
             self.hasError = true
             if let networkingError = error as? NetworkManager.NetworkingError {

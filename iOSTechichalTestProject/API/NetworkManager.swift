@@ -14,16 +14,15 @@ final class NetworkManager {
     private init() {
         
     }
-    
-    func request<T: Codable>(methodType: MethodType = .GET,
-                             _ absoluteURL: String,
+
+    func request<T: Codable>(_ endpoint: Endpoint,
                              type: T.Type) async throws -> T {
         
-        guard let url = URL(string: absoluteURL) else {
+        guard let url = endpoint.url else {
             throw NetworkingError.invalidURL
         }
-        
-        let request = buildRequest(from: url, methodType: methodType)
+
+        let request = buildRequest(from: url, methodType: endpoint.methodType)
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse,
@@ -39,14 +38,13 @@ final class NetworkManager {
         return res
     }
     
-    func request(methodType: MethodType = .GET,
-                 _ absoluteURL: String) async throws {
+    func request(_ endPoint: Endpoint) async throws {
         
-        guard let url = URL(string: absoluteURL) else {
+        guard let url = endPoint.url else {
             throw NetworkingError.invalidURL
         }
         
-        let request = buildRequest(from: url, methodType: methodType)
+        let request = buildRequest(from: url, methodType: endPoint.methodType)
         let (_, response) = try await URLSession.shared.data(for: request)
         
         guard let response = response as? HTTPURLResponse,
@@ -85,15 +83,15 @@ extension NetworkManager.NetworkingError {
     }
 }
 
-extension NetworkManager {
-    enum MethodType {
-        case GET
-        case POST(data: Data?)
-    }
-}
+//extension NetworkManager {
+//    enum MethodType {
+//        case GET
+//        case POST(data: Data?)
+//    }
+//}
 
 private extension NetworkManager {
-    func buildRequest(from url: URL, methodType: MethodType) -> URLRequest {
+    func buildRequest(from url: URL, methodType: Endpoint.MethodType) -> URLRequest {
         var request = URLRequest(url: url)
         
         switch methodType {
